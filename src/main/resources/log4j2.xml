@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" shutdownHook="disable">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}%l - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFileThirdPart" fileName="./logs/${artifactId}.thirdPart.log"
+                     filePattern="./logs/${artifactId}.%d{yyyy-MM-dd}-%i.thirdPart.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} ${hostName} [%t] %C{1.}:%L %p - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <DefaultRolloverStrategy max="50"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="RollingFileInfo" fileName="./logs/${artifactId}.log"
+        filePattern="./logs/${artifactId}.%d{yyyy-MM-dd}-%i.log">
+        <PatternLayout pattern="%d{HH:mm:ss.SSS} ${hostName} [%t] %C{1.}:%L %p - %msg%n"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+            <DefaultRolloverStrategy max="50"/>
+        </Policies>
+    </RollingFile>
+
+        <!--<Raven name="Sentry"  >-->
+          <!--<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>-->
+          <!--<dsn>-->
+              <!--http://9ab33daec1aa4bea9e2da0cfd389574c:38757373aa424c4481e48e1043450051@172.17.100.26:9000/23?raven.async.queuesize=100-->
+          <!--</dsn>-->
+      <!--</Raven>-->
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="RollingFileThirdPart"/>
+            <!--<AppenderRef ref="Console"/>-->
+        </Root>
+
+        <logger name="com.mm" level="info" additivity="false">
+             <AppenderRef ref="RollingFileInfo"/>
+             <AppenderRef ref="Console"/>
+            <!--<AppenderRef ref="Sentry"/>-->
+        </logger>
+        
+    </Loggers>
+</Configuration>
