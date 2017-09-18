@@ -8,6 +8,6 @@ import lombok.Setter;
 public class User {
     private String username;
     private String password;
-    private Boolean gender;
+    private int gender;
     private Integer age;
 }
